@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "bool AmostEqual&lt;16u&gt;(fixed_point&lt;16u&gt;, fixed_point&lt;16u&gt;):main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "long long fix64_mul&lt;32u&gt;(long long, long long):BasicOperations.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "product_hi &gt;&gt; 63">
+            </PersistentString>
+            <PersistentString
+               value = "product_hi &gt;&gt; (64-32)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "bool AmostEqual&lt;32u&gt;(fixed_point&lt;32u&gt;, fixed_point&lt;32u&gt;):main.cpp">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
