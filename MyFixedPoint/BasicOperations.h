@@ -44,3 +44,133 @@ fix64 fix64_mul(fix64 inArg0, fix64 inArg1)
     auto result = (product_hi << p) | (product_lo >> p);
     return result;
 }
+
+template<unsigned int p>
+fix64 fix64_inv(fix64 a);
+
+template<unsigned int p>
+fix64 fix64_div(fix64 a, fix64 b)
+{
+#if 0
+    std::uint64_t remainder = a >= 0 ? a : -a;
+    std::uint64_t divider = b >= 0 ? b : -b;
+    std::uint64_t quotient = 0;
+    std::uint64_t bit = fix64(1) << p;
+    
+    while (divider < remainder)
+    {
+        divider <<= 1;
+        bit <<= 1;
+    }
+    
+    while (bit != 0 && remainder != 0)
+    {
+        if (remainder >= divider)
+        {
+            quotient |= bit;
+            remainder -= divider;
+        }
+        
+        remainder <<= 1;
+        bit >>= 1;
+    }
+    
+    fix64 result = quotient;
+    
+    if ((a ^ b) & 0x8000000000000000)
+    {
+        result = -result;
+    }
+    
+    return result;
+#else
+    // a faster implementation using newton-raphson to get 1/b first
+    return fix64_mul<p>(a, fix64_inv<p>(b));
+#endif
+}
+
+namespace Helper {
+    inline int CountLeadingZeros(std::uint64_t x)
+    {
+        int exp = 63;
+        
+        if (x & 0xffffffff00000000) {
+            exp -= 32;
+            x >>= 32;
+        }
+        
+        if (x & 0xffff0000) {
+            exp -= 16;
+            x >>= 16;
+        }
+        
+        if (x & 0xff00) {
+            exp -= 8;
+            x >>= 8;
+        }
+        
+        if (x & 0xf0) {
+            exp -= 4;
+            x >>= 4;
+        }
+        
+        if (x & 0xc) { 
+            exp -= 2; 
+            x >>= 2; 
+        }
+        
+        if (x & 0x2) { 
+            exp -= 1; 
+        }
+        
+        return exp;
+    }
+}
+
+template<unsigned int p>
+fix64 fix64_inv(fix64 a)
+{
+    bool sign = false;
+    
+    if (a < 0) {
+        sign = true;
+        a = -a;
+    }
+    
+    // 4/8, 4/9, 4/10, ... 4/15
+    
+    // when p == 32
+//    static const std::uint64_t rcp_tab[] = {
+//        0x80000000, 0x71c71c71, 0x66666666, 0x5d1745d1, 0x55555555, 0x4ec4ec4e, 0x49249249, 0x44444444
+//    };
+    
+    static const std::uint64_t rcp_tab[] =
+    {
+        (1L << (2+p)) / 8,
+        (1L << (2+p)) / 9,
+        (1L << (2+p)) / 10,
+        (1L << (2+p)) / 11,
+        (1L << (2+p)) / 12,
+        (1L << (2+p)) / 13,
+        (1L << (2+p)) / 14,
+        (1L << (2+p)) / 15
+    };
+    
+    int exp = Helper::CountLeadingZeros(a);
+    std::int64_t x = ((std::int64_t)rcp_tab[(a>>(60-exp))&0x7]) << 2;
+    exp -= (64-p);
+    
+    if (exp <= 0)
+        x >>= -exp;
+    else
+        x <<= exp;
+    
+    /* two iterations of newton-raphson  x = x(2-ax) */
+    x = fix64_mul<(p)>(x,((2L<<(p)) - fix64_mul<p>(a,x)));
+    x = fix64_mul<(p)>(x,((2L<<(p)) - fix64_mul<p>(a,x)));
+    
+    if (sign)
+        return -x;
+    else
+        return x;
+}

@@ -22,17 +22,22 @@ using namespace std;
 }
 
 template<unsigned int p>
-bool AmostEqual(fixed_point<p> a, fixed_point<p> b)
+bool AlmostEqual(fixed_point<p> a, fixed_point<p> b)
 {
-    fixed_point<p> kinda_small_number(0.0001f * fabsf(a +b));
+    fixed_point<p> allowed_error(0.0001f * fabsf(a +b));
+    const fixed_point<p> kinda_small_number(0.001f);
+    if (kinda_small_number > allowed_error)
+    {
+        allowed_error = kinda_small_number;
+    }
     
-    if (a - b<= kinda_small_number && b - a <= kinda_small_number)
+    if (a - b<= allowed_error && b - a <= allowed_error)
     {
         return true;
     }
     else
     {
-        std::cout << a - b << std::endl;
+        std::cout << "allowed error: " << allowed_error << "; actual error: " << a - b << std::endl;
         return false;
     }
 }
@@ -53,11 +58,15 @@ void RunTest()
     
     //check (AmostEqual(fp(2.9f) * fp(3.8f), fp(2.9f*3.8f)));
     
-    float fa = 0.1f, fb = 10000.9f;
-    check (AmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
+    float fa = 95.1f, fb = 10000.9f;
+    check (AlmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
+    check (AlmostEqual(fp(fa) / fp(fb), fp(fa/fb)));
     
     fa = -100.5f; fb = 254.8f;
-    check (AmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
+    check (AlmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
+    check (AlmostEqual(fp(fa) / fp(fb), fp(fa/fb)));
+    
+    check (AlmostEqual(fp(1234.5f).inv(), fp(1.f/1234.5f)));
     
     
     std::cout << "Done Testing " << p << " bits factional part\n\n";
@@ -77,10 +86,6 @@ int main(int argc, const char * argv[])
     
     RunTest<16>();
     RunTest<32>();
-    
-    static_assert ((1>>1) == 0, "");
-    static_assert ((-1>>1) == -1, "");
-    
     
     return 0;
 }

@@ -39,6 +39,8 @@ public:
     bool operator >  (fixed_point r) const { return value > r.value; }
     bool operator <= (fixed_point r) const { return value <= r.value; }
     bool operator >= (fixed_point r) const { return value >= r.value; }
+    
+    fixed_point inv() const;
 };
 
 template<unsigned int p>
@@ -65,7 +67,16 @@ inline fixed_point<p>& fixed_point<p>::operator*= (fixed_point<p> r)
 template<unsigned int p>
 inline fixed_point<p>& fixed_point<p>::operator/= (fixed_point<p> r)
 {
-//    value = fixdiv<p>(value, r.value);
+    value = fix64_div<p>(value, r.value);
     return *this;
+}
+
+
+template<unsigned int p>
+inline fixed_point<p> fixed_point<p>::inv() const
+{
+    fixed_point x;
+    x.value = fix64_inv<p>(value);
+    return x;
 }
 
