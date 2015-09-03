@@ -85,6 +85,11 @@ fix64 fix64_div(fix64 a, fix64 b)
     return result;
 #else
     // a faster implementation using newton-raphson to get 1/b first
+    if ((b >> (32 + p/2)) && (b >> (32 + p/2)) + 1)
+    {
+        // if b is relatively big number
+        fix64_mul<p>((a >> (32 - p/2)), fix64_inv<p>(b >> (32 - p/2)));
+    }
     return fix64_mul<p>(a, fix64_inv<p>(b));
 #endif
 }
@@ -130,6 +135,11 @@ namespace Helper {
 template<unsigned int p>
 fix64 fix64_inv(fix64 a)
 {
+    if (a == 0)
+    {
+        return FIXED64_OVERFLOW;
+    }
+    
     bool sign = false;
     
     if (a < 0) {
@@ -173,4 +183,56 @@ fix64 fix64_inv(fix64 a)
         return -x;
     else
         return x;
+}
+
+template<unsigned int p>
+fix64 fix64_invSqrt(fix64 a)
+{
+    if (a == 0)
+    {
+        return FIXED64_OVERFLOW;
+    }
+    if (a == (1L << p))
+    {
+        return a;
+    }
+    
+    // sqrt(4/8), sqrt(4/9), sqrt(4/10)..., sqrt(4/15)
+    // this is for p == 32
+    static const std::uint64_t rsq_tab[] =
+    {
+        0xb504f333 >> (32 - p),
+        0xaaaaaaaa >> (32 - p),
+        0xa1e89b12 >> (32 - p),
+        0x9a5fb1e8 >> (32 - p),
+        0x93cd3a2c >> (32 - p),
+        0x8e00d501 >> (32 - p),
+        0x88d6772b >> (32 - p),
+        0x8432a516 >> (32 - p)
+    };
+    
+    int exp = Helper::CountLeadingZeros(a);
+    std::int64_t x = rsq_tab[(a>>(28-exp))&0x7]<<1;
+    
+    exp -= (64-p);
+    if (exp <= 0)
+    {
+        x >>= -exp>>1;
+    }
+    else
+    {
+        x <<= (exp>>1)+(exp&1);
+    }
+    
+    if (exp & 1)
+    {
+        x = fix64_mul<p>(x, rsq_tab[0]);
+    }
+    
+    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
+    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
+    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
+    //x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
+    
+    return x;
 }

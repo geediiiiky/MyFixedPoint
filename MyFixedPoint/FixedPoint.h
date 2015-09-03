@@ -19,6 +19,7 @@ public:
     fixed_point() = default;
     fixed_point(int i) { value = i * FIXED_ONE; }
     explicit fixed_point(float f) { value  = (fix64)(f * FIXED_ONE); }
+    explicit fixed_point(double f) { value  = (fix64)(f * FIXED_ONE); }
     
     operator float() { return float(value) / float(FIXED_ONE); }
     
@@ -41,6 +42,7 @@ public:
     bool operator >= (fixed_point r) const { return value >= r.value; }
     
     fixed_point inv() const;
+    fixed_point invSqrt() const;
 };
 
 template<unsigned int p>
@@ -77,6 +79,14 @@ inline fixed_point<p> fixed_point<p>::inv() const
 {
     fixed_point x;
     x.value = fix64_inv<p>(value);
+    return x;
+}
+
+template<unsigned int p>
+inline fixed_point<p> fixed_point<p>::invSqrt() const
+{
+    fixed_point x;
+    x.value = fix64_invSqrt<p>(value);
     return x;
 }
 

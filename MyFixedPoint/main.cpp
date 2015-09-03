@@ -17,27 +17,27 @@ using namespace std;
 { \
     if (!(x)) \
     { \
-        std::cout << #x << " failed" << std::endl; \
+        std::cout << "    " << #x << " failed" << std::endl << std::endl; \
     } \
 }
 
 template<unsigned int p>
-bool AlmostEqual(fixed_point<p> a, fixed_point<p> b)
+bool AlmostEqual(fixed_point<p> a, float b)
 {
-    fixed_point<p> allowed_error(0.0001f * fabsf(a +b));
-    const fixed_point<p> kinda_small_number(0.001f);
+    float allowed_error(0.0001f * fabsf(float(a) + b));
+    const float kinda_small_number(0.001f);
     if (kinda_small_number > allowed_error)
     {
         allowed_error = kinda_small_number;
     }
     
-    if (a - b<= allowed_error && b - a <= allowed_error)
+    if ((float)a - b<= allowed_error && b - (float)a <= allowed_error)
     {
         return true;
     }
     else
     {
-        std::cout << "allowed error: " << allowed_error << "; actual error: " << a - b << std::endl;
+        std::cout << "    ->allowed error: " << allowed_error << "; actual error: " << (float)a - b << std::endl;
         return false;
     }
 }
@@ -49,8 +49,6 @@ void RunTest()
     
     using fp = fixed_point<p>;
     
-    
-    
     fp fixed_a = 100;
     
     check (fixed_a + fp(200) == fp(300));
@@ -58,19 +56,21 @@ void RunTest()
     
     //check (AmostEqual(fp(2.9f) * fp(3.8f), fp(2.9f*3.8f)));
     
-    float fa = 95.1f, fb = 10000.9f;
-    check (AlmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
-    check (AlmostEqual(fp(fa) / fp(fb), fp(fa/fb)));
+    float fa = 234595.1f, fb = 123.456f;
+    check (AlmostEqual(fp(fa) * fp(fb), (fa*fb)));
+    check (AlmostEqual(fp(fa) / fp(fb), (fa/fb)));
     
     fa = -100.5f; fb = 254.8f;
-    check (AlmostEqual(fp(fa) * fp(fb), fp(fa*fb)));
-    check (AlmostEqual(fp(fa) / fp(fb), fp(fa/fb)));
+    check (AlmostEqual(fp(fa) * fp(fb), (fa*fb)));
+    check (AlmostEqual(fp(fa) / fp(fb), (fa/fb)));
     
-    check (AlmostEqual(fp(1234.5f).inv(), fp(1.f/1234.5f)));
+    check (AlmostEqual(fp(1234.5f).inv(), (1.f/1234.5f)));
+    check (AlmostEqual(fp(-12.90123f).inv(), (1.f/-12.90123f)));
     
+    check (AlmostEqual(fp(234.f).invSqrt(), (1.f/sqrtf(234.f))));
+    check (AlmostEqual(fp(345678.f).invSqrt(), (1.f/sqrtf(345678.f))));
     
     std::cout << "Done Testing " << p << " bits factional part\n\n";
-
 }
 
 int main(int argc, const char * argv[])

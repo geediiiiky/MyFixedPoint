@@ -10,13 +10,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyFixedPoint/BasicOperations.h"
-            timestampString = "462960926.479638"
+            timestampString = "462963001.294689"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "fix64_inv(fix64 a)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyFixedPoint/BasicOperations.h"
+            timestampString = "462963001.294689"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "fix64_inv(fix64 a)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "long long fix64_inv&lt;32u&gt;(long long)"
+                  moduleName = "MyFixedPoint"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shihai/project/MyFixedPoint/MyFixedPoint/BasicOperations.h"
+                  timestampString = "462962170.335128"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "174"
+                  endingLineNumber = "174"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "long long fix64_inv&lt;16u&gt;(long long)"
+                  moduleName = "MyFixedPoint"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shihai/project/MyFixedPoint/MyFixedPoint/BasicOperations.h"
+                  timestampString = "462962170.335283"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "174"
+                  endingLineNumber = "174"
+                  offsetFromSymbolStart = "192">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
