@@ -156,14 +156,14 @@ fix64 fix64_inv(fix64 a)
     
     static const std::uint64_t rcp_tab[] =
     {
-        (1L << (2+p)) / 8,
-        (1L << (2+p)) / 9,
-        (1L << (2+p)) / 10,
-        (1L << (2+p)) / 11,
-        (1L << (2+p)) / 12,
-        (1L << (2+p)) / 13,
-        (1L << (2+p)) / 14,
-        (1L << (2+p)) / 15
+        (fix64(1) << (2+p)) / 8,
+		(fix64(1) << (2 + p)) / 9,
+		(fix64(1) << (2 + p)) / 10,
+		(fix64(1) << (2 + p)) / 11,
+		(fix64(1) << (2 + p)) / 12,
+		(fix64(1) << (2 + p)) / 13,
+		(fix64(1) << (2 + p)) / 14,
+		(fix64(1) << (2 + p)) / 15
     };
     
     int exp = Helper::CountLeadingZeros(a);
@@ -176,8 +176,8 @@ fix64 fix64_inv(fix64 a)
         x <<= exp;
     
     /* two iterations of newton-raphson  x = x(2-ax) */
-    x = fix64_mul<(p)>(x,((2L<<(p)) - fix64_mul<p>(a,x)));
-    x = fix64_mul<(p)>(x,((2L<<(p)) - fix64_mul<p>(a,x)));
+    x = fix64_mul<(p)>(x,((fix64(2)<<(p)) - fix64_mul<p>(a,x)));
+	x = fix64_mul<(p)>(x, ((fix64(2)<< (p)) - fix64_mul<p>(a, x)));
     
     if (sign)
         return -x;
@@ -192,7 +192,7 @@ fix64 fix64_invSqrt(fix64 a)
     {
         return FIXED64_OVERFLOW;
     }
-    if (a == (1L << p))
+    if (a == (fix64(1) << p))
     {
         return a;
     }
@@ -229,10 +229,10 @@ fix64 fix64_invSqrt(fix64 a)
         x = fix64_mul<p>(x, rsq_tab[0]);
     }
     
-    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
-    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
-    x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
-    //x = fix64_mul<p>((x>>1),((1L<<p)*3 - fix64_mul<p>(fix64_mul<p>(a,x),x)));
+	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
+	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
+	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
+	//x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
     
     return x;
 }
