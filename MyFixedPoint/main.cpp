@@ -17,7 +17,7 @@ using namespace std;
 { \
     if (!(x)) \
     { \
-        std::cout << "    " << #x << " failed" << std::endl << std::endl; \
+        std::cout << "    " << #x << " failed" << " @Line:" << __LINE__ << std::endl << std::endl; \
     } \
 }
 
@@ -59,6 +59,9 @@ void RunTest()
     float fa = 234595.1f, fb = 123.456f;
     check (AlmostEqual(fp(fa) * fp(fb), (fa*fb)));
     check (AlmostEqual(fp(fa) / fp(fb), (fa/fb)));
+    
+    fa = 12345.6789f; fb = 4.f;
+    check (AlmostEqual(fp(fa) / fp(fb), fa/fb))
     
     fa = -100.5f; fb = 254.8f;
     check (AlmostEqual(fp(fa) * fp(fb), (fa*fb)));

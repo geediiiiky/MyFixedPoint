@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyFixedPoint/BasicOperations.h"
-            timestampString = "462963001.294689"
+            timestampString = "463044717.744506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "fix64_inv(fix64 a)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyFixedPoint/BasicOperations.h"
-            timestampString = "462963001.294689"
+            timestampString = "463044717.744506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "fix64_inv(fix64 a)"
             landmarkType = "7">
             <Locations>

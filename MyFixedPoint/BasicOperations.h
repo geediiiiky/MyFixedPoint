@@ -4,6 +4,44 @@
 
 #include "int64.h"
 
+namespace Helper {
+    inline int CountLeadingZeros(std::uint64_t x)
+    {
+        int exp = 63;
+        
+        if (x & 0xffffffff00000000) {
+            exp -= 32;
+            x >>= 32;
+        }
+        
+        if (x & 0xffff0000) {
+            exp -= 16;
+            x >>= 16;
+        }
+        
+        if (x & 0xff00) {
+            exp -= 8;
+            x >>= 8;
+        }
+        
+        if (x & 0xf0) {
+            exp -= 4;
+            x >>= 4;
+        }
+        
+        if (x & 0xc) {
+            exp -= 2;
+            x >>= 2;
+        }
+        
+        if (x & 0x2) {
+            exp -= 1;
+        }
+        
+        return exp;
+    }
+}
+
 template<unsigned int p>
 fix64 fix64_mul(fix64 inArg0, fix64 inArg1)
 {
@@ -51,6 +89,20 @@ fix64 fix64_inv(fix64 a);
 template<unsigned int p>
 fix64 fix64_div(fix64 a, fix64 b)
 {
+    int leadingZeroes = Helper::CountLeadingZeros(b);
+    if ((b << (leadingZeroes + 1)) == 0)
+    {
+        int shiftBits = 63 - p - leadingZeroes;
+        if (shiftBits >= 0)
+        {
+            return a >> shiftBits;
+        }
+        else
+        {
+            return a << -shiftBits;
+        }
+    }
+    
 #if 0
     std::uint64_t remainder = a >= 0 ? a : -a;
     std::uint64_t divider = b >= 0 ? b : -b;
@@ -94,43 +146,7 @@ fix64 fix64_div(fix64 a, fix64 b)
 #endif
 }
 
-namespace Helper {
-    inline int CountLeadingZeros(std::uint64_t x)
-    {
-        int exp = 63;
-        
-        if (x & 0xffffffff00000000) {
-            exp -= 32;
-            x >>= 32;
-        }
-        
-        if (x & 0xffff0000) {
-            exp -= 16;
-            x >>= 16;
-        }
-        
-        if (x & 0xff00) {
-            exp -= 8;
-            x >>= 8;
-        }
-        
-        if (x & 0xf0) {
-            exp -= 4;
-            x >>= 4;
-        }
-        
-        if (x & 0xc) { 
-            exp -= 2; 
-            x >>= 2; 
-        }
-        
-        if (x & 0x2) { 
-            exp -= 1; 
-        }
-        
-        return exp;
-    }
-}
+
 
 template<unsigned int p>
 fix64 fix64_inv(fix64 a)
