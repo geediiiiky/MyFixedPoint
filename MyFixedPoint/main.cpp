@@ -72,8 +72,11 @@ void RunTest()
     
     check (AlmostEqual(fp(234.f).invSqrt(), (1.f/sqrtf(234.f))));
     check (AlmostEqual(fp(345678.f).invSqrt(), (1.f/sqrtf(345678.f))));
-    
+	check(AlmostEqual(fp(3.f).invSqrt(), (1.f / sqrtf(3.f))));
+
     std::cout << "Done Testing " << p << " bits factional part\n\n";
+
+
 }
 
 int main(int argc, const char * argv[])

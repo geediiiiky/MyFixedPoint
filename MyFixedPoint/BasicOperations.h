@@ -213,7 +213,7 @@ fix64 fix64_invSqrt(fix64 a)
         return a;
     }
     
-    // sqrt(4/8), sqrt(4/9), sqrt(4/10)..., sqrt(4/15)
+    // invSqrt(2), invSqrt(2.25), invSqrt(2.5)..., invSqrt(3.75)
     // this is for p == 32
     static const std::uint64_t rsq_tab[] =
     {
@@ -228,7 +228,7 @@ fix64 fix64_invSqrt(fix64 a)
     };
     
     int exp = Helper::CountLeadingZeros(a);
-    std::int64_t x = rsq_tab[(a>>(28-exp))&0x7]<<1;
+    std::int64_t x = rsq_tab[(a>>(60-exp))&0x7]<<1;
     
     exp -= (64-p);
     if (exp <= 0)
@@ -245,9 +245,10 @@ fix64 fix64_invSqrt(fix64 a)
         x = fix64_mul<p>(x, rsq_tab[0]);
     }
     
+	// one itration should suffice
 	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
-	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
-	x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
+	//x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
+	//x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
 	//x = fix64_mul<p>((x >> 1), ((fix64(1) << p) * 3 - fix64_mul<p>(fix64_mul<p>(a, x), x)));
     
     return x;
