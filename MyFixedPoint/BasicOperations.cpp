@@ -4,5 +4,10 @@
 #include "BasicOperations.h"
 
 
-//template<int p>
-//
+const fix64 sin_tab[] = {
+    #include "sin_tab.h"
+};
+
+const fix64 tan_tab[] = {
+    #include "tan_tab.h"
+};

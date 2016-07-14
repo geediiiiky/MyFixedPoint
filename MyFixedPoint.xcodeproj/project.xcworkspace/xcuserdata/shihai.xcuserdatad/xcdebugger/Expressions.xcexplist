@@ -3,7 +3,33 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "fixed_point&lt;32u&gt;::operator float() const:FixedPoint.h">
+      </ContextState>
+      <ContextState
+         contextName = "fixed_point&lt;32u&gt; cos&lt;32u&gt;(fixed_point&lt;32u&gt; const&amp;):FixedPoint.h">
+      </ContextState>
+      <ContextState
+         contextName = "fixed_point&lt;16u&gt; sin&lt;16u&gt;(fixed_point&lt;16u&gt; const&amp;):FixedPoint.h">
+      </ContextState>
+      <ContextState
+         contextName = "bool AmostEqual&lt;32u&gt;(fixed_point&lt;32u&gt;, fixed_point&lt;32u&gt;):main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "bool AlmostEqual&lt;32u&gt;(fixed_point&lt;32u&gt;, float):main.cpp">
+      </ContextState>
+      <ContextState
          contextName = "bool AmostEqual&lt;16u&gt;(fixed_point&lt;16u&gt;, fixed_point&lt;16u&gt;):main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "long long fix64_sin&lt;32u&gt;(long long):BasicOperations.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "FIX_PI_2">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "fixed_point&lt;32u&gt; sin&lt;32u&gt;(fixed_point&lt;32u&gt; const&amp;):FixedPoint.h">
       </ContextState>
       <ContextState
          contextName = "long long fix64_mul&lt;32u&gt;(long long, long long):BasicOperations.h">
@@ -15,9 +41,6 @@
                value = "product_hi &gt;&gt; (64-32)">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "bool AmostEqual&lt;32u&gt;(fixed_point&lt;32u&gt;, fixed_point&lt;32u&gt;):main.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -32,6 +32,8 @@
 		41C1012E1B96D7DD005A35E2 /* BasicOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicOperations.cpp; sourceTree = "<group>"; };
 		41C1012F1B96D7DD005A35E2 /* BasicOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicOperations.h; sourceTree = "<group>"; };
 		41C101311B96DA5E005A35E2 /* int64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = int64.h; sourceTree = "<group>"; };
+		41EEEB241D34EB3600D6FE02 /* sin_tab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sin_tab.h; sourceTree = "<group>"; };
+		41EEEB251D350F0500D6FE02 /* tan_tab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tan_tab.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,8 @@
 				41C1012E1B96D7DD005A35E2 /* BasicOperations.cpp */,
 				41C1012F1B96D7DD005A35E2 /* BasicOperations.h */,
 				41C101311B96DA5E005A35E2 /* int64.h */,
+				41EEEB241D34EB3600D6FE02 /* sin_tab.h */,
+				41EEEB251D350F0500D6FE02 /* tan_tab.h */,
 			);
 			path = MyFixedPoint;
 			sourceTree = "<group>";
@@ -249,6 +253,7 @@
 				41C1012A1B96AA88005A35E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
