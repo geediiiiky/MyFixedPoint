@@ -268,7 +268,7 @@ fix64 fix64_sqrt(fix64 a)
         a = -a;
     }
     
-    fix64 s = (1L << p);
+    fix64 s = (int64_t(1) << p);
     auto leadingZero = Helper::CountLeadingZeros(a);
     const int integral_bits = 64 - (int)p - leadingZero;
     if (integral_bits > 0)
@@ -291,7 +291,7 @@ fix64 fix64_sqrt(fix64 a)
 template <int p>
 fix64 float2fix(float f)
 {
-    return (fix64)(f * (1L << p));
+    return (fix64)(f * (fix64(1) << p));
 }
 
 //template<unsigned int p>
@@ -331,7 +331,7 @@ fix64 fix64_sin(fix64 a)
     auto normalized = (a >> (p - 12));
     normalized += (a & (1 << (p - 13))) ? 1 : 0;    //rounding
     
-    std::uint64_t v = (normalized & 0x400) ? sin_tab[0x400 - (normalized & 0x3ff)] : sin_tab[normalized & 0x3ff];
+    fix64 v = (normalized & 0x400) ? sin_tab[0x400 - (normalized & 0x3ff)] : sin_tab[normalized & 0x3ff];
     v >>=  (32 - p);
     return (normalized & 0x800) ? -v : v;
 }
@@ -364,7 +364,7 @@ fix64 fix64_tan(fix64 a)
     auto normalized = (a >> (p - 12));
     normalized += (a & (1 << (p - 13))) ? 1 : 0;    //rounding
     
-    std::uint64_t v = (normalized & 0x400) ? tan_tab[0x400 - (normalized & 0x3ff)] : tan_tab[normalized & 0x3ff];
+    fix64 v = (normalized & 0x400) ? tan_tab[0x400 - (normalized & 0x3ff)] : tan_tab[normalized & 0x3ff];
     v >>=  (32 - p);
     return (normalized & 0x400) ? -v : v;
 }

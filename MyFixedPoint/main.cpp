@@ -54,7 +54,7 @@ bool AlmostEqual(fixed_point<p> a, float b, float tolerance)
 template<unsigned int p>
 bool AlmostCorretForTan(float rad, fixed_point<p> result)
 {
-    const auto pi = std::acos(-1);
+    const float pi = (float)std::acos(-1);
     auto float_result = (float)result;
     auto reverse_rad = std::atan(float_result);
     auto diff = reverse_rad - rad;
@@ -99,7 +99,7 @@ void RunTest()
     check(AlmostEqual(fp(3.f).sqrt(), sqrtf(3.f)));
     check(AlmostEqual(fp(3.2761f).sqrt(), 1.81f));
     check(AlmostEqual(fp(3805.9544f).sqrt(), sqrtf(3805.9544f)));
-    check(AlmostEqual(fp(0.0396).sqrt(), sqrtf(0.0396)));
+    check(AlmostEqual(fp(0.0396f).sqrt(), sqrtf(0.0396f)));
     
     check (fp(-109.12f).abs() == fp(109.12f));
     check (fp(1029.12f).abs() == fp(1029.12f));
@@ -123,25 +123,25 @@ void RunTest()
     check (AlmostEqual(cos(fp(3.14159f/3.f)), 0.5));
     
 #define check_tan(rad) check (AlmostCorretForTan(rad, tan(fp(rad))))
-    check_tan(3.14159 / 3.f);
+    check_tan(3.14159f / 3.f);
     check_tan(0.3f);
-    check_tan(6.03456);
+    check_tan(6.03456f);
 
-#define check_atan2(y, x) check (AlmostEqual(atan2(fp(y), fp(x)), std::atan2(y, x), 0.017)) // less than 1 degree
+#define check_atan2(y, x) check (AlmostEqual(atan2(fp(y), fp(x)), std::atan2(y, x), 0.017f)) // less than 1 degree
     check_atan2(4.f, 0.1f);
     check_atan2(4.f, 10.f);
     check_atan2(5.f, -5.f);
     check_atan2(-20.f, -5.f);
     check_atan2(2.3f, 8.9f);
     
-#define check_asin(x) check (AlmostEqual(asin(fp(x)), std::asin(x), 0.017)) // less than 1 degree
-    check_asin(1);
-    check_asin(-1);
+#define check_asin(x) check (AlmostEqual(asin(fp(x)), std::asin(x), 0.017f)) // less than 1 degree
+    check_asin(1.f);
+    check_asin(-1.f);
 //    check_asin(0.89);
-    check_asin(0.98);
-    check_asin(0.707);
-    check_asin(0.5);
-    check_asin(0.0);
+    check_asin(0.98f);
+    check_asin(0.707f);
+    check_asin(0.5f);
+    check_asin(0.0f);
     
     std::cout << "Done Testing " << p << " bits factional part\n\n";
 

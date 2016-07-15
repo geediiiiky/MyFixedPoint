@@ -44,7 +44,7 @@ public:
     
     constexpr bool is_nearly_equal(std::uint64_t expected_numerator, std::uint64_t expected_denominator, std::uint64_t allowed_error_raw) const
     {
-        return value - std::int64_t(expected_numerator * (1L << p)) / expected_denominator <= allowed_error_raw;
+        return value - std::int64_t(expected_numerator * (int64_t(1) << p)) / expected_denominator <= allowed_error_raw;
     }
     
     constexpr bool is_nearly_equal(float actual, float tolerance) const
