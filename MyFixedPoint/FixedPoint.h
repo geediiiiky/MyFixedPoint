@@ -13,7 +13,8 @@ class fixed_point
 {
     // TODO: make this pulic for now to test
 public:
-    fix64 value = 0;
+	// do not give it an inital value so that constexpr constructors would trigger compilation error if this value is not properly initialized by them
+    fix64 value;
     
 public:
     static const fixed_point One() { return fixed_point(FIXED_ONE, true); }
@@ -24,17 +25,17 @@ public:
     using underlying_type = fix64;
     
 public:
-    fixed_point() = default;
-    
-    template<class T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
-    fixed_point(T i) { value = i * FIXED_ONE; }
-    
-    explicit fixed_point(float f) { value  = (fix64)(f * FIXED_ONE); }
-    explicit fixed_point(double f) { value  = (fix64)(f * FIXED_ONE); }
-    
-    enum raw_flag { is_raw };
-    explicit constexpr fixed_point(fix64 raw, raw_flag asRaw) : value(raw) {  }
-    
+	fixed_point() : value(0) {}
+
+	template<class T, typename = typename std::enable_if<std::is_integral<T>::value>::type>
+	constexpr fixed_point(T i) : value(i * FIXED_ONE) { }
+
+	constexpr explicit fixed_point(float f) : value((fix64)(f * FIXED_ONE)) {  }
+	//explicit fixed_point(double f) { value  = (fix64)(f * FIXED_ONE); }
+
+	enum raw_flag { is_raw };
+	explicit constexpr fixed_point(fix64 raw, raw_flag asRaw) : value(raw) {  }
+
 //    fixed_point& operator=(int i) { value  = (i * FIXED_ONE); return *this; }
 //    fixed_point& operator=(float f) { value  = (fix64)(f * FIXED_ONE); return *this; }
 //    fixed_point& operator=(double d) { value  = (fix64)(d * FIXED_ONE); return *this; }

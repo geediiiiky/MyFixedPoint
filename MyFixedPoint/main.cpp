@@ -187,28 +187,28 @@ int main(int argc, const char * argv[])
 #define unit_test(expr) cout << std::hex << "REQUIRE(" << #expr <<  " == 0x" << expr << ");" << endl;
     
     cout << endl << "added" << endl;
-    cout << std::hex << "0x" << (fa + UnitType(5.666)).value << endl;
-    cout << std::hex << "0x" << (fb + UnitType(7.889)).value << endl;
-    cout << std::hex << "0x" << (fc + UnitType(-0.214)).value << endl;
-    cout << std::hex << "0x" << (fd + UnitType(0.669)).value << endl;
+    cout << std::hex << "0x" << (fa + UnitType(5.666f)).value << endl;
+    cout << std::hex << "0x" << (fb + UnitType(7.889f)).value << endl;
+    cout << std::hex << "0x" << (fc + UnitType(-0.214f)).value << endl;
+    cout << std::hex << "0x" << (fd + UnitType(0.669f)).value << endl;
     
     cout << endl << "substracted" << endl;
-    unit_test((fa - UnitType(5.666)).value);
+    unit_test((fa - UnitType(5.666f)).value);
     unit_test((fb - UnitType(8000.123f)).value);
     unit_test((fc - UnitType(-123.f)).value);
     unit_test((fd - UnitType(0.254f)).value);
     
     cout << endl << "multiplied" << endl;
-    unit_test((fa * UnitType(1.2)).value);
-    unit_test((fb * UnitType(0.3)).value);
+    unit_test((fa * UnitType(1.2f)).value);
+    unit_test((fb * UnitType(0.3f)).value);
     unit_test((fc * UnitType(-32)).value);
     unit_test((fd * UnitType(4521)).value);
     
     cout << endl << "multiplied" << endl;
-    unit_test((fa / UnitType(0.5)).value);
-    unit_test((fb / UnitType(1.58)).value);
-    unit_test((fc / UnitType(9.88)).value);
-    unit_test((fd / UnitType(-123.456)).value);
+    unit_test((fa / UnitType(0.5f)).value);
+    unit_test((fb / UnitType(1.58f)).value);
+    unit_test((fc / UnitType(9.88f)).value);
+    unit_test((fd / UnitType(-123.456f)).value);
     
     cout << endl << "inv" << endl;
     unit_test((fa.inv()).value);
